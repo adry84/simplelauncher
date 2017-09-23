@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_app_logo_height">72dip</dimen>
+    <dimen name="item_app_name_height">38dip</dimen>
+</resources>
