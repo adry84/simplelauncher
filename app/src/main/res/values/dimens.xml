@@ -2,4 +2,5 @@
 <resources>
     <dimen name="item_app_logo_height">72dip</dimen>
     <dimen name="item_app_name_height">38dip</dimen>
+    <dimen name="item_app_popup_height">152dip</dimen>
 </resources>

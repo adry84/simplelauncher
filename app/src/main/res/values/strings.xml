@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SimpleLauncher</string>
+    <string name="uninstall">UNINSTALL</string>
+    <string name="info">INFO</string>
 </resources>

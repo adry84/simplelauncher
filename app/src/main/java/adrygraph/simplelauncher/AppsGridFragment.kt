@@ -5,14 +5,18 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.PopupWindow
+import android.widget.TextView
 
 
 
@@ -27,6 +31,7 @@ class AppsGridFragment : Fragment(), AppsGridItemListener{
     private var mAdapter: AppListAdapter? = null
     private var mRecyclerView: RecyclerView? = null
     private var mAppInstallReceiver: BroadcastReceiver? = null
+    private var mAppPopupWindow: PopupWindow? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +109,7 @@ class AppsGridFragment : Fragment(), AppsGridItemListener{
     }
 
     override fun onAppModelLongClick(app: AppModel) {
-        Log.d("[AppsGirdFrgment]", "onAppModelLongClick")
+        displayAppPopupWindow(app)
     }
 
     private fun registerAppReceiver() {
@@ -133,5 +138,49 @@ class AppsGridFragment : Fragment(), AppsGridItemListener{
             return
         }
         SimpleLauncherApp.instance.unregisterReceiver(mAppInstallReceiver)
+    }
+
+    private fun displayAppPopupWindow(app: AppModel) {
+        if (activity == null) {
+            return
+        }
+        val inflater = LayoutInflater.from(activity)
+        //Inflate the view from a predefined XML layout
+        val layout = inflater.inflate(R.layout.popup_app_layout, mRecyclerView, false)
+
+        val displayMetrics = activity.resources.displayMetrics
+        // create a 300px width and 470px height PopupWindow
+        mAppPopupWindow = PopupWindow(layout, displayMetrics.widthPixels, resources.getDimensionPixelSize(R.dimen.item_app_popup_height), true)
+        // display the popup in the center
+        mAppPopupWindow!!.showAtLocation(layout, Gravity.TOP, 0, 0)
+
+        val uninstallButton : Button
+        uninstallButton = layout?.findViewById(R.id.popupAppUninstallB)!!
+        val infoButton : Button
+        infoButton= layout.findViewById(R.id.popupAppInfoB)!!
+
+        val nameTV : TextView
+        nameTV= layout.findViewById(R.id.popupAppNameTV)!!
+        nameTV.text = app.getLabel()
+
+        uninstallButton.setOnClickListener({
+            val packageURI = Uri.parse("package:" + app.getApplicationPackageName())
+            val uninstallIntent = Intent(Intent.ACTION_DELETE, packageURI)
+            startActivity(uninstallIntent)
+            dismissAppPopupWindow()
+        })
+        infoButton.setOnClickListener({
+            val i = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            i.addCategory(Intent.CATEGORY_DEFAULT)
+            i.data = Uri.parse("package:" + app.getApplicationPackageName())
+            startActivity(i)
+            dismissAppPopupWindow()
+        })
+    }
+
+    private fun dismissAppPopupWindow() {
+        if (mAppPopupWindow != null) {
+            mAppPopupWindow!!.dismiss()
+        }
     }
 }
