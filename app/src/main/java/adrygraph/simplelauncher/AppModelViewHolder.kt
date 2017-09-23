@@ -7,6 +7,7 @@ import android.widget.TextView
 
 /**
  * Created by Audrey on 10/09/2017.
+ * View model fro App
  */
 class AppModelViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
     val nameTV: TextView
@@ -14,6 +15,6 @@ class AppModelViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
     init {
         nameTV = itemView!!.findViewById(R.id.itemAppLabelTV)
-        iconIV = itemView!!.findViewById(R.id.itemAppIconIV)
+        iconIV = itemView.findViewById(R.id.itemAppIconIV)
     }
 }

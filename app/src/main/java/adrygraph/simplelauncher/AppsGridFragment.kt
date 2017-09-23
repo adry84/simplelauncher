@@ -38,7 +38,7 @@ class AppsGridFragment : Fragment() { //
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mRecyclerView = view?.findViewById(R.id.fragmentAppsGridRV)!!
-        mRecyclerView?.layoutManager = GridLayoutManager(view?.context, 4) as RecyclerView.LayoutManager?
+        mRecyclerView?.layoutManager = GridLayoutManager(view.context, 4)
         mAdapter = AppListAdapter(activity, R.layout.item_app) {
             onAppModelClick(it)
         }
@@ -54,17 +54,13 @@ class AppsGridFragment : Fragment() { //
         AppsLoader({onLoadFinished(it)}).execute(null)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
     override fun onDestroy() {
         unregisterAppReceiver()
         super.onDestroy()
     }
 
 
-     fun onLoadFinished(apps: ArrayList<AppModel>) {
+     private fun onLoadFinished(apps: ArrayList<AppModel>) {
         if (mAdapter == null) {
             return
         }
@@ -80,8 +76,8 @@ class AppsGridFragment : Fragment() { //
             }
 
             override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-                mAdapter?.onItemMove(viewHolder!!.adapterPosition, target!!.adapterPosition);
-                return true;
+                mAdapter?.onItemMove(viewHolder!!.adapterPosition, target!!.adapterPosition)
+                return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
@@ -107,12 +103,13 @@ class AppsGridFragment : Fragment() { //
         }
     }
 
-    fun registerAppReceiver() {
+    private fun registerAppReceiver() {
         if (mAppInstallReceiver != null) {
-            return;
+            return
         }
         val intentFilter = IntentFilter()
         intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED)
+        @Suppress("DEPRECATION")
         intentFilter.addAction(Intent.ACTION_PACKAGE_INSTALL)
         intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED)
         intentFilter.addDataScheme("package")
@@ -127,9 +124,9 @@ class AppsGridFragment : Fragment() { //
         SimpleLauncherApp.instance.registerReceiver(mAppInstallReceiver, intentFilter)
     }
 
-    fun unregisterAppReceiver() {
+    private fun unregisterAppReceiver() {
         if (mAppInstallReceiver == null) {
-            return;
+            return
         }
         SimpleLauncherApp.instance.unregisterReceiver(mAppInstallReceiver)
     }

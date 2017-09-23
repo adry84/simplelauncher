@@ -7,9 +7,10 @@ import android.support.v4.content.ContextCompat
 
 /**
  * Created by Audrey on 10/09/2017.
+ * Android Application model
  */
 class AppModel(private val context: Context, private val appInfo: ApplicationInfo) {
-    fun  loadLabel(context: Context?) {}
+    fun  loadLabel() {}
     fun  getLabel(): String? {
         val name = SimpleLauncherApp.instance.packageManager.getApplicationLabel(appInfo)
         if (name == null) {
