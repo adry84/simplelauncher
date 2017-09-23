@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,8 @@ import android.view.ViewGroup
  * Created by Audrey on 10/09/2017.
  * AppsGridFragment
  */
-class AppsGridFragment : Fragment() { //
+class AppsGridFragment : Fragment(), AppsGridItemListener{
+
 
     private var mAdapter: AppListAdapter? = null
     private var mRecyclerView: RecyclerView? = null
@@ -39,9 +41,7 @@ class AppsGridFragment : Fragment() { //
         super.onViewCreated(view, savedInstanceState)
         mRecyclerView = view?.findViewById(R.id.fragmentAppsGridRV)!!
         mRecyclerView?.layoutManager = GridLayoutManager(view.context, 4)
-        mAdapter = AppListAdapter(activity, R.layout.item_app) {
-            onAppModelClick(it)
-        }
+        mAdapter = AppListAdapter(this)
         mRecyclerView?.adapter = mAdapter
 
         loadApp()
@@ -95,12 +95,16 @@ class AppsGridFragment : Fragment() { //
     }
 
 
-    private fun onAppModelClick(app: AppModel) {
+    override fun onAppModelClick(app: AppModel) {
         val intent = SimpleLauncherApp.instance.packageManager.getLaunchIntentForPackage(app.getApplicationPackageName())
 
         if (intent != null) {
             startActivity(intent)
         }
+    }
+
+    override fun onAppModelLongClick(app: AppModel) {
+        Log.d("[AppsGirdFrgment]", "onAppModelLongClick")
     }
 
     private fun registerAppReceiver() {
