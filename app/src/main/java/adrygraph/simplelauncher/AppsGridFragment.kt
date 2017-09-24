@@ -49,13 +49,13 @@ class AppsGridFragment : Fragment(), AppsGridItemListener{
         mAdapter = AppListAdapter(this)
         mRecyclerView?.adapter = mAdapter
 
-        loadApp()
+        loadApps()
 
         val itemTouchHelper = createItemTouchHelper()
         itemTouchHelper.attachToRecyclerView(mRecyclerView)
     }
 
-    private fun loadApp() {
+    private fun loadApps() {
         AppsLoader({onLoadFinished(it)}).execute(null)
     }
 
@@ -81,6 +81,7 @@ class AppsGridFragment : Fragment(), AppsGridItemListener{
             }
 
             override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+               dismissAppPopupWindow()
                 mAdapter?.onItemMove(viewHolder!!.adapterPosition, target!!.adapterPosition)
                 return true
             }
@@ -127,7 +128,7 @@ class AppsGridFragment : Fragment(), AppsGridItemListener{
                 if (mAdapter == null) {
                     return
                 }
-                loadApp()
+                loadApps()
             }
         }
         SimpleLauncherApp.instance.registerReceiver(mAppInstallReceiver, intentFilter)
