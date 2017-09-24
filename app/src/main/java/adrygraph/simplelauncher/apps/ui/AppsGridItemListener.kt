@@ -1,4 +1,6 @@
-package adrygraph.simplelauncher
+package adrygraph.simplelauncher.apps.ui
+
+import adrygraph.simplelauncher.apps.models.AppModel
 
 /**
  * Created by Audrey on 23/09/2017.

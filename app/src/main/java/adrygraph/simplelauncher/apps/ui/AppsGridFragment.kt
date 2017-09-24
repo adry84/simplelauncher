@@ -1,5 +1,9 @@
-package adrygraph.simplelauncher
+package adrygraph.simplelauncher.apps.ui
 
+import adrygraph.simplelauncher.R
+import adrygraph.simplelauncher.SimpleLauncherApp
+import adrygraph.simplelauncher.apps.models.AppModel
+import adrygraph.simplelauncher.apps.tasks.AppsLoader
 import android.app.Fragment
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -25,7 +29,7 @@ import android.widget.TextView
  * Created by Audrey on 10/09/2017.
  * AppsGridFragment
  */
-class AppsGridFragment : Fragment(), AppsGridItemListener{
+class AppsGridFragment : Fragment(), AppsGridItemListener {
 
 
     private var mAdapter: AppListAdapter? = null
@@ -56,7 +60,7 @@ class AppsGridFragment : Fragment(), AppsGridItemListener{
     }
 
     private fun loadApps() {
-        AppsLoader({onLoadFinished(it)}).execute(null)
+        AppsLoader({ onLoadFinished(it) }).execute(null)
     }
 
     override fun onDestroy() {

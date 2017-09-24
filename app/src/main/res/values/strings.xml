@@ -2,4 +2,6 @@
     <string name="app_name">SimpleLauncher</string>
     <string name="uninstall">UNINSTALL</string>
     <string name="info">INFO</string>
+    <string name="color_picker_pick">PICK</string>
+    <string name="color_picker_current">CURRENT</string>
 </resources>

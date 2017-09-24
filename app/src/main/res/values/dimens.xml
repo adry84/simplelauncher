@@ -3,4 +3,10 @@
     <dimen name="item_app_logo_height">72dip</dimen>
     <dimen name="item_app_name_height">38dip</dimen>
     <dimen name="item_app_popup_height">152dip</dimen>
+    <dimen name="button_font_size">24sp</dimen>
+    <dimen name="color_picker_gradient_height">306dip</dimen>
+    <dimen name="color_picker_gradient_width">266dip</dimen>
+    <dimen name="color_picker_line_color_height">52dip</dimen>
+    <dimen name="color_picker_margin">10dip</dimen>
+    <dimen name="color_picker_buttons_height">48dip</dimen>
 </resources>

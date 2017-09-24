@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityMainRootViewCL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="adrygraph.simplelauncher.MainActivity">
@@ -10,6 +11,6 @@
         android:id="@+id/activityMainAppGridFgt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="adrygraph.simplelauncher.AppsGridFragment"/>
+        android:name="adrygraph.simplelauncher.apps.ui.AppsGridFragment"/>
 
 </android.support.constraint.ConstraintLayout>

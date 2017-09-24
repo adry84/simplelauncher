@@ -1,5 +1,7 @@
-package adrygraph.simplelauncher
+package adrygraph.simplelauncher.apps.ui
 
+import adrygraph.simplelauncher.R
+import adrygraph.simplelauncher.apps.models.AppModel
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup

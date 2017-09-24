@@ -1,5 +1,7 @@
-package adrygraph.simplelauncher
+package adrygraph.simplelauncher.apps.tasks
 
+import adrygraph.simplelauncher.SimpleLauncherApp
+import adrygraph.simplelauncher.apps.models.AppModel
 import android.content.pm.ApplicationInfo
 import android.os.AsyncTask
 import java.text.Collator
