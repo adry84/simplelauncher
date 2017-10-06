@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SimpleLauncher</string>
+    <string name="uninstall">désinstaller</string>
+    <string name="info">info</string>
+    <string name="color_picker_pick">choisir</string>
+    <string name="color_picker_current">courant</string>
+</resources>

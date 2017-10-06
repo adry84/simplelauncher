@@ -275,7 +275,7 @@ class ColorPickerView internal constructor(c: Context, private val mListener: Co
             mPaint.color = Color.WHITE
         else
             mPaint.color = Color.BLACK
-        canvas.drawText(mButtonPickText, widthDialog / 4f, heightDialog - buttonHeight / 3, mPaint)
+        canvas.drawText(mButtonPickText.toUpperCase(), widthDialog / 4f, heightDialog - buttonHeight / 3, mPaint)
 
         // Draw a 'button' with the default color
         mPaint.style = Paint.Style.FILL
@@ -288,7 +288,7 @@ class ColorPickerView internal constructor(c: Context, private val mListener: Co
             mPaint.color = Color.WHITE
         else
             mPaint.color = Color.BLACK
-        canvas.drawText(mButtonCurrentText, widthDialog - widthDialog / 4F, heightDialog - buttonHeight / 3,
+        canvas.drawText(mButtonCurrentText.toUpperCase(), widthDialog - widthDialog / 4F, heightDialog - buttonHeight / 3,
                 mPaint)
     }
 
