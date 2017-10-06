@@ -1,5 +1,6 @@
 package adrygraph.simplelauncher.settings.ui
 
+import adrygraph.simplelauncher.AppData
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -12,7 +13,7 @@ import android.os.Bundle
  * Created by Audrey on 24/09/2017.
  * Color picker dialog
  */
-class ColorPickerDialog(context: Context, private var mListener: OnColorChangedListener, private var mInitialColor: Int) : Dialog(context) {
+class ColorPickerDialog(context: Context, private var mListener: OnColorChangedListener) : Dialog(context) {
 
     interface OnColorChangedListener {
         fun colorChanged(color: Int)
@@ -23,10 +24,11 @@ class ColorPickerDialog(context: Context, private var mListener: OnColorChangedL
         val l = object : OnColorChangedListener {
             override fun colorChanged(color: Int) {
                 mListener.colorChanged(color)
+                AppData.writeBackgroundColorInPref(color)
                 dismiss()
             }
         }
 
-        setContentView(ColorPickerView(context, l, mInitialColor, android.graphics.Color.RED))
+        setContentView(ColorPickerView(context, l, AppData.getBackgroundColorInPref(), AppData.DEFAULT_COLOR))
     }
 }

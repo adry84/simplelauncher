@@ -265,22 +265,10 @@ class ColorPickerView internal constructor(c: Context, private val mListener: Co
             canvas.drawCircle(mCurrentX.toFloat(), mCurrentY.toFloat(), mMargin, mPaint)
         }
 
-        // Draw a 'button' with the currently selected color
-        mPaint.style = Paint.Style.FILL
-        mPaint.color = mCurrentColor
-        canvas.drawRect(0F, heightDialog - buttonHeight, widthDialog / 2,  heightDialog, mPaint)
-
-        // Set the text color according to the brightness of the color
-        if (Color.red(mCurrentColor) + Color.green(mCurrentColor) + Color.blue(mCurrentColor) < 384)
-            mPaint.color = Color.WHITE
-        else
-            mPaint.color = Color.BLACK
-        canvas.drawText(mButtonPickText.toUpperCase(), widthDialog / 4f, heightDialog - buttonHeight / 3, mPaint)
-
         // Draw a 'button' with the default color
         mPaint.style = Paint.Style.FILL
         mPaint.color = mDefaultColor
-        canvas.drawRect(widthDialog / 2, heightDialog - buttonHeight, widthDialog, heightDialog, mPaint)
+        canvas.drawRect(0F, heightDialog - buttonHeight, widthDialog / 2,  heightDialog, mPaint)
 
         // Set the text color according to the brightness of the color
         if ((Color.red(mDefaultColor) + Color.green(mDefaultColor)
@@ -288,7 +276,19 @@ class ColorPickerView internal constructor(c: Context, private val mListener: Co
             mPaint.color = Color.WHITE
         else
             mPaint.color = Color.BLACK
-        canvas.drawText(mButtonCurrentText.toUpperCase(), widthDialog - widthDialog / 4F, heightDialog - buttonHeight / 3,
+        canvas.drawText(mButtonCurrentText.toUpperCase(), widthDialog / 4f, heightDialog - buttonHeight / 3, mPaint)
+
+        // Draw a 'button' with the currently selected color
+        mPaint.style = Paint.Style.FILL
+        mPaint.color = mCurrentColor
+        canvas.drawRect(widthDialog / 2, heightDialog - buttonHeight, widthDialog, heightDialog, mPaint)
+
+        // Set the text color according to the brightness of the color
+        if (Color.red(mCurrentColor) + Color.green(mCurrentColor) + Color.blue(mCurrentColor) < 384)
+            mPaint.color = Color.WHITE
+        else
+            mPaint.color = Color.BLACK
+        canvas.drawText(mButtonPickText.toUpperCase(), widthDialog - widthDialog / 4F, heightDialog - buttonHeight / 3,
                 mPaint)
     }
 
@@ -340,12 +340,12 @@ class ColorPickerView internal constructor(c: Context, private val mListener: Co
         // If the touch event is located in the left button, notify the
         // listener with the current color
         if (x > 0 && x < widthDialog / 2 && y > heightDialog - buttonHeight && y < heightDialog)
-            mListener.colorChanged(mCurrentColor)
+            mListener.colorChanged(mDefaultColor)
 
         // If the touch event is located in the right button, notify the
         // listener with the default color
         if (x > widthDialog / 2 && x < widthDialog && y > heightDialog - buttonHeight && y < heightDialog)
-            mListener.colorChanged(mDefaultColor)
+            mListener.colorChanged(mCurrentColor)
 
         return true
     }
