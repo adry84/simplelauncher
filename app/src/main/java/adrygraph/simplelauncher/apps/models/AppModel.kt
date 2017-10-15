@@ -18,6 +18,10 @@ class AppModel(private val context: Context, private val appInfo: ApplicationInf
         return name as String?
     }
 
+    fun  getPackageName(): String {
+        return appInfo.packageName
+    }
+
     fun getIcon(): Drawable? {
         val icon = SimpleLauncherApp.instance.packageManager.getApplicationIcon(appInfo) ?: return ContextCompat.getDrawable(context, R.drawable.ic_launcher_background)
         return icon

@@ -1,9 +1,11 @@
 package adrygraph.simplelauncher.apps.tasks
 
+import adrygraph.simplelauncher.AppData
 import adrygraph.simplelauncher.SimpleLauncherApp
 import adrygraph.simplelauncher.apps.models.AppModel
 import android.content.pm.ApplicationInfo
 import android.os.AsyncTask
+import android.util.Log
 import java.text.Collator
 import java.util.*
 import kotlin.collections.ArrayList
@@ -18,10 +20,25 @@ class AppsLoader(private val listener: (ArrayList<AppModel>) -> Unit) : AsyncTas
     override fun doInBackground(vararg p0: Void?): ArrayList<AppModel> {
         val context = SimpleLauncherApp.instance
 
-        var apps = context.packageManager.getInstalledApplications(0)
+        val appInfoList = context.packageManager.getInstalledApplications(0)
+        val apps = ArrayList<ApplicationInfo>()
+        val hasNoPrefs = appInfoList == null
 
-        if (apps == null) {
-            apps = ArrayList<ApplicationInfo>()
+        if (!hasNoPrefs) {
+            val appInfoMap = appInfoList.associate({ Pair(it.packageName, it) })
+            val sortedPackageNames = AppData.getAppsInPref()
+            var appRemoved : Boolean
+            for (appPackageName in sortedPackageNames) {
+                val appInfo = appInfoMap.get(appPackageName)
+                if (appInfo != null) {
+                    apps.add(appInfo)
+                    appRemoved = appInfoList.remove(appInfo)
+                    Log.d("AppLoader", "app:" +appPackageName + " removed:"+ appRemoved)
+                }
+            }
+            for (appInfo in appInfoList) {
+                apps.add(appInfo)
+            }
         }
 
         // create corresponding apps and load their labels
@@ -38,7 +55,9 @@ class AppsLoader(private val listener: (ArrayList<AppModel>) -> Unit) : AsyncTas
         }
 
         // sort the list
-        Collections.sort(items, alphaComparator)
+        if (hasNoPrefs) {
+            Collections.sort(items, alphaComparator)
+        }
         return items
     }
 

@@ -311,7 +311,7 @@ class ColorPickerView internal constructor(c: Context, private val mListener: Co
 
             // Update the current selected color
             val transX = mCurrentX
-            val transY = mCurrentY
+            val transY = mCurrentY + mLineColorHeight.toInt()
             val index = 256 * (transY - 1) + transX
             if (index > 0 && index < mMainColors.size)
                 mCurrentColor = mMainColors[(256 * (transY - 1) + transX)]

@@ -1,5 +1,6 @@
 package adrygraph.simplelauncher.apps.ui
 
+import adrygraph.simplelauncher.AppData
 import adrygraph.simplelauncher.R
 import adrygraph.simplelauncher.apps.models.AppModel
 import android.support.v7.widget.RecyclerView
@@ -46,7 +47,7 @@ class AppListAdapter(private var listener: AppsGridItemListener) : RecyclerView.
     fun setData(data: ArrayList<AppModel>?) {
         list.clear()
         if (data != null) {
-            list. addAll(data)
+            list.addAll(data)
         }
     }
 
@@ -60,6 +61,7 @@ class AppListAdapter(private var listener: AppsGridItemListener) : RecyclerView.
                 Collections.swap(list, i, i - 1)
             }
         }
+        AppData.writeAppListInPref(list)
         notifyItemMoved(fromPosition, toPosition)
         return true
     }
