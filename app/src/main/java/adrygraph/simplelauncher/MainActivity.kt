@@ -24,11 +24,11 @@ class MainActivity : AppCompatActivity(), ColorPickerDialog.OnColorChangedListen
     }
 
     private fun displayColorPicker() {
-        ColorPickerDialog(this@MainActivity, this@MainActivity)
-                .show()
+        ColorPickerDialog(this@MainActivity, this@MainActivity, AppData.getBackgroundColorInPref()).show()
     }
 
     override fun colorChanged(color: Int) {
+        AppData.writeBackgroundColorInPref(color)
         setBackground(color)
     }
 

@@ -13,7 +13,7 @@ import android.os.Bundle
  * Created by Audrey on 24/09/2017.
  * Color picker dialog
  */
-class ColorPickerDialog(context: Context, private var mListener: OnColorChangedListener) : Dialog(context) {
+class ColorPickerDialog(context: Context, private var mListener: OnColorChangedListener,  private val mInitialColor: Int) : Dialog(context) {
 
     interface OnColorChangedListener {
         fun colorChanged(color: Int)
@@ -24,11 +24,10 @@ class ColorPickerDialog(context: Context, private var mListener: OnColorChangedL
         val l = object : OnColorChangedListener {
             override fun colorChanged(color: Int) {
                 mListener.colorChanged(color)
-                AppData.writeBackgroundColorInPref(color)
                 dismiss()
             }
         }
 
-        setContentView(ColorPickerView(context, l, AppData.getBackgroundColorInPref(), AppData.DEFAULT_COLOR))
+        setContentView(ColorPickerView(context, l, mInitialColor, AppData.DEFAULT_COLOR))
     }
 }
