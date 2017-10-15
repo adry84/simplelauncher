@@ -12,7 +12,7 @@ import android.view.View
  * Created by Audrey on 24/09/2017.
  * Color picker View
  */
-class ColorPickerView internal constructor(c: Context, private val mListener: ColorPickerDialog.OnColorChangedListener, private var mCurrentColor: Int, private val mDefaultColor: Int) : View(c) {
+class ColorPickerView internal constructor(c: Context, private val mListener: ColorPickerDialog.OnColorChangedListener, private val mDefaultColor: Int) : View(c) {
     private val mPaint: Paint
     private var mCurrentHue = 0f
     private var mCurrentX = 0
@@ -33,7 +33,7 @@ class ColorPickerView internal constructor(c: Context, private val mListener: Co
     private val mGradientColors = IntArray(2)
     private val mColorBox = RectF(0f, 0f, 0f, 0f)
     private var mPaintShader : LinearGradient
-
+    private var mCurrentColor = mDefaultColor
 
 
     // Get the current selected color from the hue bar
@@ -325,12 +325,12 @@ class ColorPickerView internal constructor(c: Context, private val mListener: Co
         if (x > 0 && x < widthDialog && y > mLineColorHeight && y < heightDialog - buttonHeight) {
             mCurrentX = x.toInt()
             mCurrentY = y.toInt()
-            val transX = mCurrentX  / mStepWidth
-            val transY = (mCurrentY - mLineColorHeight) / mDensity
+            val transX = (mCurrentX / mStepWidth).toInt()
+            val transY = ((mCurrentY - mLineColorHeight) / mDensity).toInt()
             val index = 256 * (transY - 1) + transX
             if (index > 0 && index < mMainColors.size) {
                 // Update the current color
-                mCurrentColor = mMainColors[index.toInt()]
+                mCurrentColor = mMainColors[index]
                 // Force the redraw of the dialog
                 invalidate()
             }

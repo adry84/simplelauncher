@@ -1,6 +1,5 @@
 package adrygraph.simplelauncher.settings.ui
 
-import adrygraph.simplelauncher.AppData
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -28,6 +27,6 @@ class ColorPickerDialog(context: Context, private var mListener: OnColorChangedL
             }
         }
 
-        setContentView(ColorPickerView(context, l, mInitialColor, AppData.DEFAULT_COLOR))
+        setContentView(ColorPickerView(context, l, mInitialColor))
     }
 }
