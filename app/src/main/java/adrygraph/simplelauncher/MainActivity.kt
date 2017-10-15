@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialog.OnColorChangedListen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mRootView = findViewById(R.id.activityMainRootViewCL)!!
+        setBackground(AppData.getBackgroundColorInPref())
     }
 
     override fun onBackPressed() {
