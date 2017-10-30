@@ -11,6 +11,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -36,6 +37,29 @@ class AppsGridFragment : Fragment(), AppsGridItemListener {
     private var mRecyclerView: RecyclerView? = null
     private var mAppInstallReceiver: BroadcastReceiver? = null
     private var mAppPopupWindow: PopupWindow? = null
+    private var colorChangedBroadCastReceiver: BroadcastReceiver? = null
+
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        colorChangedBroadCastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                 if (mAdapter != null) {
+                     mAdapter!!.updateTextColor()
+                 }
+            }
+        }
+        LocalBroadcastManager.getInstance(activity)
+                .registerReceiver(colorChangedBroadCastReceiver, IntentFilter(SimpleLauncherApp.BROADCAST_BG_COLOR_CHANGED))
+    }
+
+    override fun onDetach() {
+        if (colorChangedBroadCastReceiver != null) {
+            LocalBroadcastManager.getInstance(activity) .unregisterReceiver(colorChangedBroadCastReceiver)
+            colorChangedBroadCastReceiver = null
+        }
+        super.onDetach()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

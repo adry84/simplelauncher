@@ -3,6 +3,7 @@ package adrygraph.simplelauncher.apps.ui
 import adrygraph.simplelauncher.AppData
 import adrygraph.simplelauncher.R
 import adrygraph.simplelauncher.apps.models.AppModel
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,11 +19,18 @@ class AppListAdapter(private var listener: AppsGridItemListener) : RecyclerView.
     private var list: ArrayList<AppModel> = ArrayList()
 
 
+    private var textColor : Int
+
+    init {
+        textColor = generateTextColor()
+    }
+
     override fun onBindViewHolder(holder: AppModelViewHolder?, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         val app : AppModel = list[position]
         holder!!.nameTV.text = app.getLabel()
+        holder.nameTV.setTextColor(textColor)
         holder.iconIV.setImageDrawable(app.getIcon())
         holder.itemView.setOnClickListener({
             listener.onAppModelClick(app)
@@ -64,5 +72,21 @@ class AppListAdapter(private var listener: AppsGridItemListener) : RecyclerView.
         AppData.writeAppListInPref(list)
         notifyItemMoved(fromPosition, toPosition)
         return true
+    }
+
+    private fun generateTextColor() : Int{
+        val backgroundColor = AppData.getBackgroundColorInPref()
+        return if ((Color.red(backgroundColor) + Color.green(backgroundColor) + Color.blue(backgroundColor)) < 384)
+            Color.WHITE
+        else
+            Color.BLACK
+    }
+
+    fun updateTextColor() {
+        val color = generateTextColor()
+       if (color != textColor) {
+           textColor = color
+           notifyDataSetChanged()
+       }
     }
 }
